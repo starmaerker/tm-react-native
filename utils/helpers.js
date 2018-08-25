@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { white } from './colors';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 export function getMetricMetaInfo(metric) {
@@ -95,7 +96,7 @@ export function getMetricMetaInfo(metric) {
                     </View>
                 )
             }
-        },
+        },        
     }
 
     return typeof metric === 'undefined'
