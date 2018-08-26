@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { getMetricMetaInfo } from '../utils/helpers';
+import UdacitySlider from './UdacitySlider'
+import UdacitySteppers from './UdacitySteppers'
 
 export default class AddEntry extends Component {
     state = {
@@ -19,11 +21,11 @@ export default class AddEntry extends Component {
             return {
                 ...state,
                 [metric]: count > max ? max : count
-            }            
+            }
         })
     }
 
-    decrement = (metric) => {       
+    decrement = (metric) => {
 
         this.setState((state) => {
             const count = state[metric] - getMetricMetaInfo(metric).step;
@@ -31,7 +33,7 @@ export default class AddEntry extends Component {
             return {
                 ...state,
                 [metric]: count < 0 ? 0 : count
-            }            
+            }
         })
     }
 
@@ -42,9 +44,34 @@ export default class AddEntry extends Component {
     }
 
     render() {
+        const metaInfo = getMetricMetaInfo()
         return (
-            <View>                
-                {getMetricMetaInfo('bike').getIcon()}
+            <View>
+                {Object.keys(metaInfo).map((key) => {
+                    const { getIcon, type, ...rest } = metaInfo[key]
+                    const value = this.state[key]
+
+                    return (
+                        <View key={key}>
+                            {getIcon()}
+                            { type === 'slider'
+                                ? <UdacitySlider 
+                                    value={value}
+                                    onChange= {(value) => this.slide(key, value)}
+                                    {...rest}
+                                    />
+                                : <UdacitySteppers
+                                    value={value}
+                                    onIncrement={() => this.increment(key)}
+                                    onDecrement={() => this.decrement(key)}
+                                    {...rest}
+                                    />
+                                    }
+                                
+                        </View>
+                    )
+                })}
+
             </View>
         )
     }
