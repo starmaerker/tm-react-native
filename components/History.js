@@ -20,19 +20,39 @@ class History extends Component {
                 }
             })
     }
-    render() {
+    renderItem = ({ today, ...metrics }, formattedDay, key) => (
+        <View>
+            {today
+                ? <Text>{JSON.stringify(today)}</Text>
+                : <Text>{JSON.stringify(metrics)}</Text>
+            }
+        </View>
+    )
+    renderEmptyDate(formattedDay) {
         return (
             <View>
-                <Text>{JSON.stringify(this.props)}</Text>
+                <Text>No data for this day</Text>
             </View>
+        )
+    }
+
+    render() {
+        const { entries } = this.props
+
+        return (
+            <UdaciFitnessCalendar
+                items={entries}
+                renderItem={this.renderItem}
+                renderEmptyDate={this.renderEmptyDate}
+            />
         )
     }
 }
 
 function mapStateToProps(entries) {
-    return (
+    return {
         entries
-    )
+    }
 }
 
 export default connect(mapStateToProps)(History)
