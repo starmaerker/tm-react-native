@@ -13,7 +13,7 @@ import EntryDetail from './components/EntryDetail'
 
 function Status({ backgroundColor, ...props }) {
   return (
-    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
@@ -55,23 +55,28 @@ const Tabs = createMaterialTopTabNavigator({
     }
   })
 
-  const MainNavigator = createStackNavigator({
-    Home: {
-      screen: Tabs,
-      navigationOptions: {
-        header: null,
-      }
-    },
-    EntryDetail: {
-      screen: EntryDetail,
-      navigationOptions: ({ navigation }) => ({
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        }
-      })
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null,
     }
-  })
+  },
+  EntryDetail: {
+    screen: EntryDetail,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,        
+      },
+      headerTitleStyle: {
+        fontSize: 20,
+        
+        
+      },        
+    })
+  }
+})
 
 export default class App extends React.Component {
   state = {
